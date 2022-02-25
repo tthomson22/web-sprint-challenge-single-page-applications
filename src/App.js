@@ -53,6 +53,8 @@ export default function App() {
     setFormValues({ ...formValues, [name]: value })
   }
 
+  console.log(users)
+
   return (
     <div className='App'>
       <nav>

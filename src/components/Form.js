@@ -23,10 +23,11 @@ export default function Form(props){
             </div>
             <form id='pizza-form' onSubmit={onSubmit}>
                 
-                <label id='name-input' className='name'>
+                <label  className='name'>
                     <h3>Name:</h3>
                     
                     <input
+                        id='name-input'
                         name='username'
                         type='text'
                         value={username}
@@ -97,8 +98,9 @@ export default function Form(props){
                     />
                 </label>
 
-                <button id='order-button' className='orderbtn'>Order</button>
+                <button id='order-button' className='orderbtn'>Add to Order</button>
             </form>
+            
         </div>
     )
 }
