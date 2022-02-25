@@ -1,11 +1,14 @@
 import React, {useState} from "react";
+import { Route, Link, Switch } from 'react-router-dom'
 import axios from 'axios';
 import * as yup from 'yup'
 
+import Home from './components/Home'
 import Form from './components/Form'
 import schema from './validation/formSchema';
 
 const initialFormValues = {
+  username: '',
   size: '',
   special: '',
   pepperoni: false,
@@ -15,6 +18,7 @@ const initialFormValues = {
 }
 
 const initialFormErrors = {
+  name: '',
   size: '',
   special: '',
   pepperoni: '',
@@ -38,7 +42,7 @@ export default function App() {
   const handleSubmit = () => {
     axios.post('https://reqres.in/api/orders', formValues)
       .then(res => {
-        // console.log(res)
+        console.log(res.data)
         setUsers([ res.data, ...users ])
       })
       .catch(err => console.error(err))
@@ -51,7 +55,21 @@ export default function App() {
 
   return (
     <div className='App'>
-      <h1>Lambda Eats</h1>
+      <nav>
+        <div>
+          <h1>Lambda Eats</h1>
+          <Link to='/'>Home</Link>
+        </div>
+      </nav>
+      <Switch>
+        <Route path='/'>
+            <Home />
+        </Route>
+        <Route path='/pizza'>
+          
+        </Route>
+      </Switch>
+      
       <Form 
         values={formValues} 
         change={handleChange} 
@@ -59,6 +77,5 @@ export default function App() {
         errors={formErrors}
       />
     </div>
-
   );
 }

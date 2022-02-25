@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Form(props){
     const { change, submit, errors } = props;
-    const { size, special, pepperoni, basil, anchovies, pineapple } = props.values;
+    const { username, size, special, pepperoni, basil, anchovies, pineapple } = props.values;
 
     const onSubmit = (evt) => {
         evt.preventDefault()
@@ -19,11 +19,23 @@ export default function Form(props){
         <div className='form-container'>
             <div className='form-header'>
                 <h2>Build your own pizza</h2>
+                <p>{errors.username}</p>
             </div>
-            <form id='name-input' value='name' onSubmit={onSubmit}>
+            <form id='pizza-form' onSubmit={onSubmit}>
                 
-                <p>{errors.name}</p>
-                <label id='size-dropdown' className='size'>Size:
+                <label id='name-input' className='name'>
+                    <h3>Name:</h3>
+                    
+                    <input
+                        name='username'
+                        type='text'
+                        value={username}
+                        onChange={onChange}
+                    />
+                </label>
+                
+                <label id='size-dropdown' className='size'>
+                    <h3>Size:</h3>
                     <select
                         name='size'
                         value={size}
@@ -36,8 +48,9 @@ export default function Form(props){
                     </select>
                 </label>
 
-                <div className='toppings'>Toppings:
-                    <label className='pepperoni'>
+                <div className='toppings'>
+                    <h3>Toppings:</h3>
+                    <label className='pepperoni'>pepperoni:
                         <input
                             name='pepperoni'
                             type='checkbox'
@@ -46,7 +59,7 @@ export default function Form(props){
                         />
                     </label>
 
-                    <label className='basil'>
+                    <label className='basil'>basil:
                         <input
                             name='basil'
                             type='checkbox'
@@ -55,7 +68,7 @@ export default function Form(props){
                         />
                     </label>
 
-                    <label className='anchovies'>
+                    <label className='anchovies'>anchovies:
                         <input
                             name='anchovies'
                             type='checkbox'
@@ -64,7 +77,7 @@ export default function Form(props){
                         />
                     </label>
 
-                    <label className='pineapple'>
+                    <label className='pineapple'>pineapple:
                         <input
                             name='pineapple'
                             type='checkbox'
@@ -74,7 +87,8 @@ export default function Form(props){
                     </label>
                 </div>
 
-                <label id='special-text' className='special'>Special instruction:
+                <label id='special-text' className='special'>
+                    <h3>Special instruction:</h3>
                     <input
                         name='special'
                         type='text'
@@ -83,12 +97,7 @@ export default function Form(props){
                     />
                 </label>
 
-                <input
-                    className='submit-button'
-                    id='pizza-form'
-                    type='submit'
-                    value='Submit'
-                />
+                <button id='order-button' className='orderbtn'>Order</button>
             </form>
         </div>
     )
