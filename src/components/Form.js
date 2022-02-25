@@ -1,8 +1,10 @@
 import React from 'react' 
+import { Link, useRouteMatch } from 'react-router-dom'
 
 export default function Form(props){
-    const { change, submit, errors } = props;
+    const { change, submit, errors, disabled } = props;
     const { username, size, special, pepperoni, basil, anchovies, pineapple } = props.values;
+    const { url } = useRouteMatch();
 
     const onSubmit = (evt) => {
         evt.preventDefault()
@@ -35,21 +37,22 @@ export default function Form(props){
                     />
                 </label>
                 
-                <label id='size-dropdown' className='size'>
+                <label >
                     <h3>Size:</h3>
                     <select
+                        id='size-dropdown'
                         name='size'
                         value={size}
                         onChange={onChange}
                     >
-                        <option value=''>--select size--</option>
+                        {/* <option value=''>--select size--</option> */}
                         <option value='small'>Small</option>
                         <option value='medium'>Medium</option>
                         <option value='large'>Large</option>
                     </select>
                 </label>
 
-                <div className='toppings'>
+                <div id='toppings' className='toppings'>
                     <h3>Toppings:</h3>
                     <label className='pepperoni'>pepperoni:
                         <input
@@ -98,7 +101,7 @@ export default function Form(props){
                     />
                 </label>
 
-                <button id='order-button' className='orderbtn'>Add to Order</button>
+                <button id='order-button' disabled={disabled}>Add to Order</button>
             </form>
             
         </div>

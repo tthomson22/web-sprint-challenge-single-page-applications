@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Route, Link, Switch } from 'react-router-dom'
 import axios from 'axios';
 import * as yup from 'yup'
@@ -27,13 +27,17 @@ const initialFormErrors = {
   pineapple: ''
 }
 
+const initialDisabled = true
+
 export default function App() {
   const [ formValues, setFormValues ] = useState(initialFormValues)
   const [ formErrors, setFormErrors ] = useState(initialFormErrors)
+  const [disabled, setDisabled] = useState(initialDisabled) 
   const [ users, setUsers ] = useState([])
 
   const validate = (name, value) => {
-    yup.reach(schema, name)
+    yup
+      .reach(schema, name)
       .validate(value)
       .then(() => setFormErrors({ ...formErrors, [name]: '' }))
       .catch(err => setFormErrors({ ...formErrors, [name]: err.errors[0] }))
@@ -44,6 +48,7 @@ export default function App() {
       .then(res => {
         console.log(res.data)
         setUsers([ res.data, ...users ])
+
       })
       .catch(err => console.error(err))
   }
@@ -53,7 +58,13 @@ export default function App() {
     setFormValues({ ...formValues, [name]: value })
   }
 
-  console.log(users)
+
+
+  useEffect(() => {
+    schema
+      .isValid(formValues)
+      .then(valid => setDisabled(!valid))
+  }, [formValues])
 
   return (
     <div className='App'>
@@ -61,6 +72,7 @@ export default function App() {
         <div>
           <h1>Lambda Eats</h1>
           <Link to='/'>Home</Link>
+          <Link to='/pizza'>Order Pizza</Link>
         </div>
       </nav>
       <Switch>
@@ -72,10 +84,11 @@ export default function App() {
         </Route>
       </Switch>
       
-      <Form 
+      <Form path='/pizza'
         values={formValues} 
         change={handleChange} 
         submit={handleSubmit}
+        disabled={disabled}
         errors={formErrors}
       />
     </div>
